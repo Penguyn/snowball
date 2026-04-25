@@ -79,19 +79,23 @@ main {
   letter-spacing: 0.04em;
   text-transform: none;
   color: #000;
-  padding: 40px 48px 0;
+  padding: 40px 0 0;
+  margin: 0 48px;
 }
 
 /* ── PROJECTS SCROLL ── */
 .projects-scroll {
   display: flex;
   overflow-x: auto;
-  overflow-y: hidden;
+  overflow-y: visible;
   gap: 3px;
-  padding: 0 48px;
+  padding-left: 48px;
+  padding-right: 48px;
   scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
+  /* fix: allow left padding to show in scroll container */
+  box-sizing: content-box;
 }
 
 .projects-scroll::-webkit-scrollbar { display: none; }
@@ -123,8 +127,9 @@ main {
   inset: 0;
   display: flex;
   align-items: flex-end;
-  padding: 20px;
+  padding: 14px 16px;
   pointer-events: none;
+  background: linear-gradient(transparent 55%, rgba(0,0,0,0.45) 100%);
 }
 
 .project-label {
@@ -133,14 +138,7 @@ main {
   font-family: 'snaga-unicase-display-hair', sans-serif;
   letter-spacing: 0.04em;
   color: #fff;
-  opacity: 0;
-  transform: translateY(4px);
-  transition: opacity 0.3s var(--ease), transform 0.3s var(--ease);
-}
-
-.project-item:hover .project-label {
   opacity: 1;
-  transform: translateY(0);
 }
 
 /* placeholder grey box */
@@ -156,10 +154,12 @@ main {
   overflow-x: auto;
   overflow-y: hidden;
   gap: 3px;
-  padding: 0 48px;
+  padding-left: 48px;
+  padding-right: 48px;
   scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
+  box-sizing: content-box;
 }
 
 .clients-scroll::-webkit-scrollbar { display: none; }
@@ -184,7 +184,8 @@ main {
   letter-spacing: 0.04em;
   text-transform: none;
   color: #000;
-  padding: 56px 48px 0;
+  padding: 56px 0 0;
+  margin: 0 48px;
 }
 
 .client-item:hover { }
@@ -487,10 +488,11 @@ textarea.form-field {
 /* ── RESPONSIVE ── */
 @media (max-width: 768px) {
   nav { padding: 0 24px; }
-  .section-label, .clients-label { padding-left: 24px; padding-right: 24px; }
-  .projects-scroll { padding: 0 24px; }
+  .section-label { margin: 0 24px; }
+  .clients-label { margin: 0 24px; }
+  .projects-scroll { padding-left: 24px; padding-right: 24px; }
   .project-item { flex: 0 0 72vw; }
-  .clients-scroll { padding: 0 24px; }
+  .clients-scroll { padding-left: 24px; padding-right: 24px; }
   .client-item { flex: 0 0 28vw; min-width: 80px; }
   .project-detail { grid-template-columns: 1fr; }
   .detail-media { aspect-ratio: 16/9; }
