@@ -49,24 +49,10 @@ nav {
   padding: 0 48px;
   background: rgba(255,255,255,0.95);
   backdrop-filter: blur(10px);
-  border-bottom: 1px solid var(--border);
 }
 
-.logo {
-  font-family: var(--font);
-  font-weight: 100;
-  font-size: 22px;
-  letter-spacing: 0.04em;
-  text-decoration: none;
-  color: var(--ink);
-  cursor: pointer;
-  line-height: 1;
-}
-
-.logo span {
-  color: var(--grey-light);
-  font-weight: 100;
-}
+.logo-link { display: flex; align-items: center; text-decoration: none; }
+.logo-img { height: 28px; width: auto; display: block; }
 
 .nav-contact {
   font-family: var(--font);
@@ -95,7 +81,7 @@ main {
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--grey-light);
-  padding: 40px 48px 20px;
+  padding: 40px 48px 0;
 }
 
 /* ── PROJECTS GRID ── */
@@ -118,27 +104,20 @@ main {
   width: 100%; height: 100%;
   object-fit: cover;
   display: block;
-  transition: transform 0.65s var(--ease), filter 0.4s;
-  filter: grayscale(0.15);
+  transition: filter 0.4s var(--ease);
 }
 
 .project-item:hover img {
-  transform: scale(1.04);
-  filter: grayscale(0);
+  filter: brightness(0.82);
 }
 
 .project-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(0,0,0,0);
-  transition: background 0.35s var(--ease);
   display: flex;
   align-items: flex-end;
   padding: 20px;
-}
-
-.project-item:hover .project-overlay {
-  background: rgba(0,0,0,0.28);
+  pointer-events: none;
 }
 
 .project-label {
@@ -147,7 +126,7 @@ main {
   letter-spacing: 0.08em;
   color: #fff;
   opacity: 0;
-  transform: translateY(6px);
+  transform: translateY(4px);
   transition: opacity 0.3s var(--ease), transform 0.3s var(--ease);
 }
 
@@ -170,7 +149,7 @@ main {
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--grey-light);
-  padding: 56px 48px 20px;
+  padding: 56px 48px 0;
 }
 
 .clients-grid {
@@ -183,14 +162,12 @@ main {
 .client-item {
   background: transparent;
   aspect-ratio: 1 / 1;
-  border: 1px solid var(--border);
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: border-color 0.25s;
 }
 
-.client-item:hover { border-color: rgba(0,0,0,0.2); }
+.client-item:hover { }
 
 .client-item img {
   max-width: 60%;
@@ -215,7 +192,6 @@ main {
 /* ── FOOTER ── */
 footer {
   margin-top: 56px;
-  border-top: 1px solid var(--border);
   padding: 32px 48px;
   display: flex;
   justify-content: space-between;
@@ -514,7 +490,9 @@ textarea.form-field {
 
 <!-- NAV -->
 <nav>
-  <a class="logo" href="#" onclick="return false;">snowball<span>. your communication</span></a>
+  <a class="logo-link" href="#" onclick="return false;">
+    <img src="logo.svg" alt="Snowball — your communication" class="logo-img">
+  </a>
   <button class="nav-contact" onclick="openContact()">contact</button>
 </nav>
 
@@ -567,7 +545,7 @@ textarea.form-field {
 
 <!-- FOOTER -->
 <footer>
-  <div class="footer-logo">snowball<span>. your communication</span></div>
+  <div class="footer-logo"><img src="logo.svg" alt="Snowball" style="height:20px;width:auto;opacity:0.5;"></div>
   <div class="footer-meta">
     <a href="mailto:hello@snowball.studio">hello@snowball.studio</a>
     <span>Tbilisi, Georgia</span>
