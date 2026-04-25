@@ -82,20 +82,29 @@ main {
   padding: 40px 48px 0;
 }
 
-/* ── PROJECTS GRID ── */
-.projects-grid {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
+/* ── PROJECTS SCROLL ── */
+.projects-scroll {
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
   gap: 3px;
   padding: 0 48px;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
 }
+
+.projects-scroll::-webkit-scrollbar { display: none; }
 
 .project-item {
   position: relative;
   overflow: hidden;
   cursor: pointer;
   background: var(--grey-bg);
+  flex: 0 0 calc(20vw - 12px);
+  min-width: 220px;
   aspect-ratio: 1 / 1;
+  scroll-snap-align: start;
 }
 
 .project-item img {
@@ -141,7 +150,32 @@ main {
 .project-item.empty:hover img { transform: none; }
 .project-item.empty .project-overlay { display: none; }
 
-/* ── CLIENTS SECTION ── */
+/* ── CLIENTS SCROLL ── */
+.clients-scroll {
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
+  gap: 3px;
+  padding: 0 48px;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.clients-scroll::-webkit-scrollbar { display: none; }
+
+.client-item {
+  background: transparent;
+  flex: 0 0 calc(11.11vw - 6px);
+  min-width: 100px;
+  aspect-ratio: 1 / 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  scroll-snap-align: start;
+}
+
+/* ── CLIENTS LABEL ── */
 .clients-label {
   font-family: 'snaga-unicase-display-hair', sans-serif;
   font-weight: 100;
@@ -151,21 +185,6 @@ main {
   text-transform: none;
   color: #000;
   padding: 56px 48px 0;
-}
-
-.clients-grid {
-  display: grid;
-  grid-template-columns: repeat(9, 1fr);
-  gap: 3px;
-  padding: 0 48px;
-}
-
-.client-item {
-  background: transparent;
-  aspect-ratio: 1 / 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .client-item:hover { }
@@ -466,16 +485,13 @@ textarea.form-field {
 .contact-close:hover { opacity: 0.5; }
 
 /* ── RESPONSIVE ── */
-@media (max-width: 1024px) {
-  .projects-grid { grid-template-columns: repeat(3, 1fr); }
-  .clients-grid { grid-template-columns: repeat(5, 1fr); }
-}
-
 @media (max-width: 768px) {
   nav { padding: 0 24px; }
   .section-label, .clients-label { padding-left: 24px; padding-right: 24px; }
-  .projects-grid { grid-template-columns: repeat(2, 1fr); padding: 0 24px; gap: 2px; }
-  .clients-grid { grid-template-columns: repeat(3, 1fr); padding: 0 24px; }
+  .projects-scroll { padding: 0 24px; }
+  .project-item { flex: 0 0 72vw; }
+  .clients-scroll { padding: 0 24px; }
+  .client-item { flex: 0 0 28vw; min-width: 80px; }
   .project-detail { grid-template-columns: 1fr; }
   .detail-media { aspect-ratio: 16/9; }
   footer { padding: 24px; flex-direction: column; align-items: flex-start; gap: 12px; }
@@ -484,9 +500,9 @@ textarea.form-field {
 }
 
 @media (max-width: 480px) {
-  .projects-grid { grid-template-columns: 1fr; }
-  .clients-grid { grid-template-columns: repeat(2, 1fr); }
-  .logo { font-size: 18px; }
+  .project-item { flex: 0 0 88vw; }
+  .client-item { flex: 0 0 36vw; min-width: 72px; }
+  .logo-img { height: 32px; }
 }
 </style>
 </head>
@@ -503,7 +519,7 @@ textarea.form-field {
 <main>
   <!-- PROJECTS -->
   <p class="section-label">Projects</p>
-  <div class="projects-grid" id="projectsGrid">
+  <div class="projects-scroll" id="projectsGrid">
 
     <div class="project-item" onclick="openProject(0)">
       <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=600&q=80&auto=format" alt="Project 1">
@@ -534,7 +550,7 @@ textarea.form-field {
 
   <!-- CLIENTS -->
   <p class="clients-label">Clients</p>
-  <div class="clients-grid">
+  <div class="clients-scroll">
     <div class="client-item"><img src="client1.svg" alt="Client"></div>
     <div class="client-item"><img src="client2.svg" alt="Client"></div>
     <div class="client-item"></div>
