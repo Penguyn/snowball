@@ -6,7 +6,6 @@
 <title>Snowball — your communication</title>
 <link rel="stylesheet" href="https://use.typekit.net/xxj7zrj.css">
 <style>
-/* Font: Snaga Uni Display Hairline via Adobe Fonts (xxj7zrj) */
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -20,17 +19,61 @@
   --border: rgba(0,0,0,0.09);
   --ease: cubic-bezier(0.4, 0, 0.2, 1);
   --nav-h: 72px;
+  --pad: 48px;
 }
 
 html { scroll-behavior: smooth; }
 
 body {
-  font-family: 'snaga-unicase-display', sans-serif;
+  font-family: var(--font);
+  font-weight: 100;
   background: var(--white);
-  color: #000;
-  font-weight: 400;
+  color: var(--ink);
   overflow-x: hidden;
+  cursor: none;
 }
+
+/* ── CUSTOM CURSOR ── */
+.cursor {
+  position: fixed;
+  top: 0; left: 0;
+  width: 5px; height: 5px;
+  background: #000;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: width 0.25s var(--ease), height 0.25s var(--ease),
+              background 0.25s, border-color 0.25s;
+  border: 1px solid transparent;
+}
+.cursor.hover {
+  width: 30px; height: 30px;
+  background: transparent;
+  border-color: #000;
+}
+.cursor.hover-red {
+  width: 30px; height: 30px;
+  background: transparent;
+  border-color: var(--red);
+}
+@media (hover: none) {
+  body { cursor: auto; }
+  .cursor { display: none; }
+}
+
+/* ── ENTRY ANIMATION ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.anim { opacity: 0; }
+.anim.go { animation: fadeUp 0.75s var(--ease) forwards; }
+.d1 { animation-delay: 0.05s; }
+.d2 { animation-delay: 0.20s; }
+.d3 { animation-delay: 0.35s; }
+.d4 { animation-delay: 0.48s; }
+.d5 { animation-delay: 0.60s; }
 
 /* ── NAV ── */
 nav {
@@ -41,48 +84,71 @@ nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 48px;
+  padding: 0 var(--pad);
   background: rgba(255,255,255,0.95);
   backdrop-filter: blur(10px);
 }
 
-.logo-link { display: flex; align-items: center; text-decoration: none; }
-.logo-img { height: 44px; width: auto; display: block; }
+.logo-link { display: flex; align-items: center; text-decoration: none; cursor: none; }
+.logo-img  { height: 44px; width: auto; display: block; }
 
 .nav-contact {
-  font-family: 'snaga-unicase-display', sans-serif;
-  font-weight: 400;
-  font-style: normal;
+  font-family: var(--font);
+  font-weight: 100;
   font-size: 14px;
   letter-spacing: 0.02em;
   color: var(--red);
-  cursor: pointer;
+  cursor: none;
   background: none;
   border: none;
   padding: 0;
   transition: opacity 0.2s;
 }
-
 .nav-contact:hover { opacity: 0.65; }
 
-/* ── PAGE BODY ── */
-main {
-  padding-top: var(--nav-h);
+/* ── MAIN ── */
+main { padding-top: var(--nav-h); }
+
+/* ── SECTION HEADER ROW ── */
+.section-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: flex-end;
+  gap: 16px;
+  padding: 64px 0 0;
+  margin: 0 var(--pad);
 }
 
-/* ── SECTION LABELS ── */
 .section-label {
-  font-family: 'snaga-unicase-display', sans-serif;
-  font-weight: 400;
-  font-style: normal;
+  font-family: var(--font);
+  font-weight: 100;
   font-size: 13px;
   letter-spacing: 0.04em;
-  text-transform: none;
   color: #000;
-  padding: 40px 0 0;
-  margin: 0 48px;
-  display: block;
-  text-align: right;
+}
+
+.section-count {
+  font-family: var(--font);
+  font-weight: 100;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: var(--grey-light);
+}
+
+/* ── SCROLL INDICATOR ── */
+.scroll-track {
+  margin: 10px var(--pad) 0;
+  height: 1px;
+  background: rgba(0,0,0,0.07);
+  position: relative;
+}
+.scroll-thumb {
+  position: absolute;
+  top: 0; left: 0;
+  height: 100%;
+  background: #000;
+  width: 0%;
+  transition: width 0.08s linear;
 }
 
 /* ── PROJECTS SCROLL ── */
@@ -91,38 +157,32 @@ main {
   overflow-x: auto;
   overflow-y: visible;
   gap: 3px;
-  padding-left: 48px;
-  padding-right: 48px;
+  padding-left: var(--pad);
+  padding-right: var(--pad);
   scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
-  /* fix: allow left padding to show in scroll container */
   box-sizing: content-box;
 }
-
 .projects-scroll::-webkit-scrollbar { display: none; }
 
 .project-item {
   position: relative;
   overflow: hidden;
-  cursor: pointer;
+  cursor: none;
   background: var(--grey-bg);
   flex: 0 0 calc(20vw - 12px);
   min-width: 220px;
   aspect-ratio: 1 / 1;
   scroll-snap-align: start;
 }
-
 .project-item img {
   width: 100%; height: 100%;
   object-fit: cover;
   display: block;
   transition: filter 0.4s var(--ease);
 }
-
-.project-item:hover img {
-  filter: brightness(0.82);
-}
+.project-item:hover img { filter: brightness(0.82); }
 
 .project-overlay {
   position: absolute;
@@ -133,37 +193,27 @@ main {
   pointer-events: none;
   background: linear-gradient(transparent 55%, rgba(0,0,0,0.45) 100%);
 }
-
 .project-label {
+  font-family: var(--font);
+  font-weight: 100;
   font-size: 12px;
-  font-weight: 400;
-  font-family: 'snaga-unicase-display', sans-serif;
   letter-spacing: 0.04em;
   color: #fff;
-  opacity: 1;
 }
 
-/* placeholder grey box */
-.project-item.empty {
-  cursor: default;
-}
-.project-item.empty:hover img { transform: none; }
-.project-item.empty .project-overlay { display: none; }
-
-/* ── CLIENTS SCROLL ── */
+/* ── CLIENTS ── */
 .clients-scroll {
   display: flex;
   overflow-x: auto;
   overflow-y: hidden;
   gap: 3px;
-  padding-left: 48px;
-  padding-right: 48px;
+  padding-left: var(--pad);
+  padding-right: var(--pad);
   scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
   box-sizing: content-box;
 }
-
 .clients-scroll::-webkit-scrollbar { display: none; }
 
 .client-item {
@@ -176,24 +226,6 @@ main {
   justify-content: center;
   scroll-snap-align: start;
 }
-
-/* ── CLIENTS LABEL ── */
-.clients-label {
-  font-family: 'snaga-unicase-display', sans-serif;
-  font-weight: 400;
-  font-style: normal;
-  font-size: 13px;
-  letter-spacing: 0.04em;
-  text-transform: none;
-  color: #000;
-  padding: 56px 0 0;
-  margin: 0 48px;
-  display: block;
-  text-align: right;
-}
-
-.client-item:hover { }
-
 .client-item img {
   max-width: 75%;
   max-height: 65%;
@@ -201,58 +233,34 @@ main {
   display: block;
   transition: opacity 0.25s;
 }
-
-.client-item:hover img { opacity: 0.75; }
-
-/* placeholder text for demo */
-.client-placeholder {
-  font-size: 10px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--grey-light);
-  font-weight: 200;
-}
+.client-item:hover img { opacity: 0.7; }
 
 /* ── FOOTER ── */
 footer {
-  margin-top: 56px;
-  padding: 32px 48px;
+  margin-top: 80px;
+  padding: 32px var(--pad);
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 16px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
 }
-
-.footer-logo {
-  font-weight: 400;
-  font-size: 14px;
-  letter-spacing: 0.04em;
-  color: var(--ink);
-}
-
-.footer-logo span { color: var(--grey-light); }
-
 .footer-meta {
   display: flex;
   gap: 32px;
-  align-items: center;
   flex-wrap: wrap;
 }
-
 .footer-meta a, .footer-meta span {
+  font-family: var(--font);
+  font-weight: 100;
   font-size: 11px;
-  font-weight: 400;
-  font-family: 'snaga-unicase-display', sans-serif;
   letter-spacing: 0.04em;
   color: #000;
   text-decoration: none;
   transition: opacity 0.2s;
 }
-
 .footer-meta a:hover { opacity: 0.5; }
 
-/* ── OVERLAY ── */
+/* ── OVERLAY BASE ── */
 .overlay {
   position: fixed;
   inset: 0;
@@ -264,18 +272,14 @@ footer {
   pointer-events: none;
   transition: opacity 0.35s var(--ease);
 }
-
-.overlay.open {
-  opacity: 1;
-  pointer-events: all;
-}
+.overlay.open { opacity: 1; pointer-events: all; }
 
 .overlay-backdrop {
   position: absolute;
   inset: 0;
   background: rgba(255,255,255,0.92);
   backdrop-filter: blur(18px);
-  cursor: pointer;
+  cursor: none;
 }
 
 /* ── PROJECT OVERLAY ── */
@@ -292,22 +296,10 @@ footer {
   transform: translateY(18px);
   transition: transform 0.4s var(--ease);
 }
+.overlay.open .project-detail { transform: translateY(0); }
 
-.overlay.open .project-detail {
-  transform: translateY(0);
-}
-
-.detail-media {
-  background: var(--grey-bg);
-  aspect-ratio: 4/3;
-  overflow: hidden;
-}
-
-.detail-media img {
-  width: 100%; height: 100%;
-  object-fit: cover;
-  display: block;
-}
+.detail-media { background: var(--grey-bg); aspect-ratio: 4/3; overflow: hidden; }
+.detail-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
 .detail-info {
   padding: 40px 36px;
@@ -315,47 +307,42 @@ footer {
   flex-direction: column;
   gap: 16px;
 }
-
 .detail-tag {
+  font-family: var(--font);
+  font-weight: 100;
   font-size: 11px;
   letter-spacing: 0.08em;
-  color: #000;
-  font-weight: 400;
-  font-family: 'snaga-unicase-display', sans-serif;
+  color: var(--grey-light);
 }
-
 .detail-title {
-  font-size: 28px;
-  font-weight: 400;
+  font-family: var(--font);
+  font-weight: 100;
+  font-size: 26px;
   letter-spacing: -0.01em;
   line-height: 1.15;
   color: #000;
-  font-family: 'snaga-unicase-display', sans-serif;
 }
-
 .detail-desc {
+  font-family: var(--font);
+  font-weight: 100;
   font-size: 13px;
-  font-weight: 400;
   color: #000;
-  line-height: 1.75;
+  line-height: 1.8;
   flex: 1;
-  font-family: 'snaga-unicase-display', sans-serif;
 }
-
 .detail-close {
+  font-family: var(--font);
+  font-weight: 100;
   font-size: 11px;
   letter-spacing: 0.08em;
-  font-weight: 400;
   color: #000;
   background: none;
   border: none;
-  cursor: pointer;
+  cursor: none;
   padding: 0;
-  font-family: 'snaga-unicase-display', sans-serif;
   transition: opacity 0.2s;
   align-self: flex-start;
 }
-
 .detail-close:hover { opacity: 0.5; }
 
 /* ── CONTACT OVERLAY ── */
@@ -369,20 +356,16 @@ footer {
   transform: translateY(18px);
   transition: transform 0.4s var(--ease);
 }
-
-.overlay.open .contact-box {
-  transform: translateY(0);
-}
+.overlay.open .contact-box { transform: translateY(0); }
 
 .contact-heading {
-  font-size: 28px;
-  font-weight: 400;
-  font-family: 'snaga-unicase-display', sans-serif;
+  font-family: var(--font);
+  font-weight: 100;
+  font-size: 26px;
   letter-spacing: -0.01em;
   color: #000;
   margin-bottom: 36px;
 }
-
 .contact-direct {
   display: flex;
   flex-direction: column;
@@ -391,172 +374,161 @@ footer {
   padding-bottom: 32px;
   border-bottom: 1px solid var(--border);
 }
-
 .contact-direct a {
+  font-family: var(--font);
+  font-weight: 100;
   font-size: 13px;
-  font-weight: 400;
-  font-family: 'snaga-unicase-display', sans-serif;
+  letter-spacing: 0.02em;
   color: #000;
   text-decoration: none;
-  letter-spacing: 0.02em;
   transition: opacity 0.2s;
 }
-
 .contact-direct a:hover { opacity: 0.5; }
 
-.contact-form {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-}
+.contact-form { display: flex; flex-direction: column; gap: 0; }
 
 .form-field {
   border: none;
   border-bottom: 1px solid var(--border);
   background: transparent;
   padding: 14px 0;
-  font-family: 'snaga-unicase-display', sans-serif;
+  font-family: var(--font);
+  font-weight: 100;
   font-size: 13px;
-  font-weight: 400;
   color: #000;
   outline: none;
   width: 100%;
   transition: border-color 0.25s;
 }
-
 .form-field::placeholder { color: var(--grey-light); }
-.form-field:focus { border-color: var(--ink); }
-
-textarea.form-field {
-  resize: none;
-  height: 80px;
-  margin-top: 8px;
-}
+.form-field:focus { border-color: #000; }
+textarea.form-field { resize: none; height: 80px; margin-top: 8px; }
 
 .form-submit {
   margin-top: 28px;
-  font-family: 'snaga-unicase-display', sans-serif;
+  font-family: var(--font);
+  font-weight: 100;
   font-size: 11px;
-  font-weight: 400;
   letter-spacing: 0.08em;
   color: #000;
   background: none;
   border: none;
-  cursor: pointer;
+  cursor: none;
   padding: 0;
   display: flex;
   align-items: center;
   gap: 10px;
   transition: gap 0.3s var(--ease);
 }
-
 .form-submit:hover { gap: 18px; }
 
 .arrow-line {
   display: block;
-  width: 28px;
-  height: 1px;
-  background: var(--ink);
+  width: 28px; height: 1px;
+  background: #000;
   position: relative;
   transition: width 0.3s var(--ease);
 }
-
 .form-submit:hover .arrow-line { width: 40px; }
-
 .arrow-line::after {
   content: '';
   position: absolute;
   right: 0; top: -3px;
   width: 6px; height: 6px;
-  border-right: 1px solid var(--ink);
-  border-top: 1px solid var(--ink);
+  border-right: 1px solid #000;
+  border-top: 1px solid #000;
   transform: rotate(45deg);
 }
 
 .contact-close {
   position: absolute;
   top: 20px; right: 24px;
+  font-family: var(--font);
+  font-weight: 100;
   font-size: 11px;
   letter-spacing: 0.08em;
-  font-weight: 400;
   color: #000;
   background: none;
   border: none;
-  cursor: pointer;
-  font-family: 'snaga-unicase-display', sans-serif;
+  cursor: none;
   transition: opacity 0.2s;
 }
-
 .contact-close:hover { opacity: 0.5; }
 
 /* ── RESPONSIVE ── */
 @media (max-width: 768px) {
-  nav { padding: 0 24px; }
-  .section-label { margin: 0 24px; }
-  .clients-label { margin: 0 24px; }
-  .projects-scroll { padding-left: 24px; padding-right: 24px; }
-  .project-item { flex: 0 0 72vw; }
-  .clients-scroll { padding-left: 24px; padding-right: 24px; }
-  .client-item { flex: 0 0 28vw; min-width: 80px; }
+  :root { --pad: 24px; }
+  .project-item  { flex: 0 0 72vw; }
+  .client-item   { flex: 0 0 28vw; min-width: 80px; }
   .project-detail { grid-template-columns: 1fr; }
-  .detail-media { aspect-ratio: 16/9; }
-  footer { padding: 24px; flex-direction: column; align-items: flex-start; gap: 12px; }
-  .footer-meta { gap: 20px; }
-  .contact-box { padding: 40px 28px; }
+  .detail-media  { aspect-ratio: 16/9; }
+  footer         { margin-top: 48px; }
+  .contact-box   { padding: 40px 28px; }
 }
-
 @media (max-width: 480px) {
   .project-item { flex: 0 0 88vw; }
-  .client-item { flex: 0 0 36vw; min-width: 72px; }
-  .logo-img { height: 32px; }
+  .client-item  { flex: 0 0 36vw; min-width: 72px; }
+  .logo-img     { height: 32px; }
 }
+
 </style>
 </head>
 <body>
 
+<div class="cursor" id="cursor"></div>
+
 <!-- NAV -->
 <nav>
-  <a class="logo-link" href="#" onclick="return false;">
+  <a class="logo-link anim d1" href="#" onclick="return false;">
     <img src="Snowball_logo.svg" alt="Snowball — your communication" class="logo-img">
   </a>
-  <button class="nav-contact" onclick="openContact()">contact</button>
+  <button class="nav-contact anim d2" onclick="openContact()">contact</button>
 </nav>
 
 <main>
+
   <!-- PROJECTS -->
-  <p class="section-label">projects</p>
-  <div class="projects-scroll" id="projectsGrid">
+  <div class="section-header anim d3">
+    <span class="section-count" id="projectCount">01 / 05</span>
+    <span class="section-label">projects</span>
+  </div>
+  <div class="scroll-track anim d3">
+    <div class="scroll-thumb" id="projectsThumb"></div>
+  </div>
+  <div class="projects-scroll anim d4" id="projectsScroll">
 
     <div class="project-item" onclick="openProject(0)">
-      <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=600&q=80&auto=format" alt="Project 1">
-      <div class="project-overlay"><span class="project-label">Culture Film — TBC</span></div>
+      <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=600&q=80&auto=format" alt="Culture Film">
+      <div class="project-overlay"><span class="project-label">culture film</span></div>
     </div>
 
     <div class="project-item" onclick="openProject(1)">
-      <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=600&q=80&auto=format" alt="Project 2">
-      <div class="project-overlay"><span class="project-label">All-Hands — TBC</span></div>
+      <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=600&q=80&auto=format" alt="All-Hands">
+      <div class="project-overlay"><span class="project-label">all-hands film</span></div>
     </div>
 
     <div class="project-item" onclick="openProject(2)">
-      <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=600&q=80&auto=format" alt="Project 3">
-      <div class="project-overlay"><span class="project-label">Onboarding Series — TBC</span></div>
+      <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=600&q=80&auto=format" alt="Onboarding Series">
+      <div class="project-overlay"><span class="project-label">onboarding series</span></div>
     </div>
 
     <div class="project-item" onclick="openProject(3)">
-      <img src="https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=600&q=80&auto=format" alt="Project 4">
-      <div class="project-overlay"><span class="project-label">Values Motion — TBC</span></div>
+      <img src="https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=600&q=80&auto=format" alt="Values Motion">
+      <div class="project-overlay"><span class="project-label">values motion</span></div>
     </div>
 
     <div class="project-item" onclick="openProject(4)">
-      <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=600&q=80&auto=format" alt="Project 5">
-      <div class="project-overlay"><span class="project-label">Leadership Portraits — TBC</span></div>
+      <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=600&q=80&auto=format" alt="Leadership Portraits">
+      <div class="project-overlay"><span class="project-label">leadership portraits</span></div>
     </div>
 
   </div>
 
   <!-- CLIENTS -->
-  <p class="clients-label">clients</p>
-  <div class="clients-scroll">
+  <div class="section-header anim d4" style="padding-top: 56px;">
+    <span class="section-label">clients</span>
+  </div>
+  <div class="clients-scroll anim d5">
     <div class="client-item"><img src="client1.svg" alt="Client"></div>
     <div class="client-item"><img src="client2.svg" alt="Client"></div>
     <div class="client-item"></div>
@@ -567,11 +539,12 @@ textarea.form-field {
     <div class="client-item"></div>
     <div class="client-item"></div>
   </div>
+
 </main>
 
 <!-- FOOTER -->
-<footer>
-  <div class="footer-logo"><img src="Snowball_logo.svg" alt="Snowball" style="height:36px;width:auto;"></div>
+<footer class="anim d5">
+  <img src="Snowball_logo.svg" alt="Snowball" style="height:36px;width:auto;">
   <div class="footer-meta">
     <a href="mailto:hello@snowball.studio">hello@snowball.studio</a>
     <span>Tbilisi, Georgia</span>
@@ -580,106 +553,116 @@ textarea.form-field {
 </footer>
 
 <!-- PROJECT OVERLAY -->
-<div class="overlay" id="projectOverlay" onclick="handleOverlayClick(event, 'projectOverlay')">
+<div class="overlay" id="projectOverlay" onclick="handleOverlayClick(event,'projectOverlay')">
   <div class="overlay-backdrop"></div>
   <div class="project-detail">
-    <div class="detail-media">
-      <img id="detailImg" src="" alt="">
-    </div>
+    <div class="detail-media"><img id="detailImg" src="" alt=""></div>
     <div class="detail-info">
       <span class="detail-tag" id="detailTag"></span>
       <h2 class="detail-title" id="detailTitle"></h2>
       <p class="detail-desc" id="detailDesc"></p>
-      <button class="detail-close" onclick="closeOverlay('projectOverlay')">Close</button>
+      <button class="detail-close" onclick="closeOverlay('projectOverlay')">close</button>
     </div>
   </div>
 </div>
 
 <!-- CONTACT OVERLAY -->
-<div class="overlay" id="contactOverlay" onclick="handleOverlayClick(event, 'contactOverlay')">
+<div class="overlay" id="contactOverlay" onclick="handleOverlayClick(event,'contactOverlay')">
   <div class="overlay-backdrop"></div>
   <div class="contact-box">
-    <button class="contact-close" onclick="closeOverlay('contactOverlay')">Close</button>
-    <h2 class="contact-heading">Let's talk.</h2>
+    <button class="contact-close" onclick="closeOverlay('contactOverlay')">close</button>
+    <h2 class="contact-heading">let's talk.</h2>
     <div class="contact-direct">
       <a href="mailto:hello@snowball.studio">hello@snowball.studio</a>
       <a href="tel:+995000000000">+995 000 000 000</a>
     </div>
     <div class="contact-form">
-      <input class="form-field" type="text" placeholder="Name">
-      <input class="form-field" type="text" placeholder="Company">
-      <input class="form-field" type="email" placeholder="Email">
-      <textarea class="form-field" placeholder="Message"></textarea>
-      <button class="form-submit">
-        Send <span class="arrow-line"></span>
-      </button>
+      <input class="form-field" type="text" placeholder="name">
+      <input class="form-field" type="text" placeholder="company">
+      <input class="form-field" type="email" placeholder="email">
+      <textarea class="form-field" placeholder="message"></textarea>
+      <button class="form-submit">send <span class="arrow-line"></span></button>
     </div>
   </div>
 </div>
 
 <script>
+/* ── CURSOR ── */
+const cursor = document.getElementById('cursor');
+document.addEventListener('mousemove', e => {
+  cursor.style.left = e.clientX + 'px';
+  cursor.style.top  = e.clientY + 'px';
+});
+document.querySelectorAll('a, button, .project-item').forEach(el => {
+  el.addEventListener('mouseenter', () => {
+    cursor.classList.remove('hover', 'hover-red');
+    cursor.classList.add(el.classList.contains('nav-contact') ? 'hover-red' : 'hover');
+  });
+  el.addEventListener('mouseleave', () => cursor.classList.remove('hover', 'hover-red'));
+});
+
+/* ── ENTRY ANIMATION ── */
+window.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.anim').forEach(el => el.classList.add('go'));
+});
+
+/* ── PROJECTS DATA ── */
 const projects = [
-  {
-    tag: 'Motion graphics',
-    title: 'Culture Film',
-    desc: 'A 90-second animated film distilling a company's culture code into a visual story the whole team could share and feel proud of. Replace this with your actual project description.',
-    img: 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=900&q=80&auto=format'
-  },
-  {
-    tag: 'Live action',
-    title: 'All-Hands Film',
+  { tag: 'motion graphics', title: 'culture film',
+    desc: "A 90-second animated film distilling a company's culture code into a visual story the whole team could share and feel proud of.",
+    img: 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=900&q=80&auto=format' },
+  { tag: 'live action', title: 'all-hands film',
     desc: 'A produced shoot capturing real moments from a company-wide gathering — edited to feel like a memory, not a corporate recap.',
-    img: 'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=900&q=80&auto=format'
-  },
-  {
-    tag: 'Live action',
-    title: 'Onboarding Series',
+    img: 'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=900&q=80&auto=format' },
+  { tag: 'live action', title: 'onboarding series',
     desc: 'Three-part content series for new joiners. Replaced a 40-page PDF with a watch-in-20-minutes experience.',
-    img: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=900&q=80&auto=format'
-  },
-  {
-    tag: 'Motion graphics',
-    title: 'Values Motion',
+    img: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=900&q=80&auto=format' },
+  { tag: 'motion graphics', title: 'values motion',
     desc: 'Six values, six vignettes. Each one uses a different visual metaphor to make abstract principles feel lived-in and human.',
-    img: 'https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=900&q=80&auto=format'
-  },
-  {
-    tag: 'Live action',
-    title: 'Leadership Portraits',
+    img: 'https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=900&q=80&auto=format' },
+  { tag: 'live action', title: 'leadership portraits',
     desc: 'A cinematic portrait series for a newly restructured leadership team. Humanised faces behind roles people had only seen in org charts.',
-    img: 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=900&q=80&auto=format'
-  }
+    img: 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=900&q=80&auto=format' }
 ];
 
+/* ── SCROLL INDICATOR + COUNT ── */
+const scrollEl = document.getElementById('projectsScroll');
+const thumb    = document.getElementById('projectsThumb');
+const countEl  = document.getElementById('projectCount');
+const total    = projects.length;
+const pad      = n => String(n).padStart(2, '0');
+
+scrollEl.addEventListener('scroll', () => {
+  const max = scrollEl.scrollWidth - scrollEl.clientWidth;
+  thumb.style.width = (max > 0 ? (scrollEl.scrollLeft / max) * 100 : 0) + '%';
+  const itemW = scrollEl.querySelector('.project-item').offsetWidth + 3;
+  const idx   = Math.min(Math.round(scrollEl.scrollLeft / itemW) + 1, total);
+  countEl.textContent = pad(idx) + ' / ' + pad(total);
+});
+
+/* ── OVERLAYS ── */
 function openProject(i) {
   const p = projects[i];
-  document.getElementById('detailImg').src = p.img;
-  document.getElementById('detailTag').textContent = p.tag;
-  document.getElementById('detailTitle').textContent = p.title;
-  document.getElementById('detailDesc').textContent = p.desc;
+  document.getElementById('detailImg').src            = p.img;
+  document.getElementById('detailTag').textContent    = p.tag;
+  document.getElementById('detailTitle').textContent  = p.title;
+  document.getElementById('detailDesc').textContent   = p.desc;
   document.getElementById('projectOverlay').classList.add('open');
   document.body.style.overflow = 'hidden';
 }
-
 function openContact() {
   document.getElementById('contactOverlay').classList.add('open');
   document.body.style.overflow = 'hidden';
 }
-
 function closeOverlay(id) {
   document.getElementById(id).classList.remove('open');
   document.body.style.overflow = '';
 }
-
 function handleOverlayClick(e, id) {
   if (e.target.classList.contains('overlay-backdrop')) closeOverlay(id);
 }
-
 document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') {
-    closeOverlay('projectOverlay');
-    closeOverlay('contactOverlay');
-  }
+  if (e.key === 'Escape') { closeOverlay('projectOverlay'); closeOverlay('contactOverlay'); }
 });
 </script>
 </body>
