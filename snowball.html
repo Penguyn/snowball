@@ -469,32 +469,7 @@ textarea.form-field { resize: none; height: 80px; margin-top: 8px; }
     <span class="section-label">projects</span>
   </div>
   <div class="projects-scroll anim d4" id="projectsScroll">
-
-    <div class="project-item" onclick="openProject(0)">
-      <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=600&q=80&auto=format" alt="Culture Film">
-      <div class="project-overlay"><span class="project-label">culture film</span></div>
-    </div>
-
-    <div class="project-item" onclick="openProject(1)">
-      <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=600&q=80&auto=format" alt="All-Hands">
-      <div class="project-overlay"><span class="project-label">all-hands film</span></div>
-    </div>
-
-    <div class="project-item" onclick="openProject(2)">
-      <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=600&q=80&auto=format" alt="Onboarding Series">
-      <div class="project-overlay"><span class="project-label">onboarding series</span></div>
-    </div>
-
-    <div class="project-item" onclick="openProject(3)">
-      <img src="https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=600&q=80&auto=format" alt="Values Motion">
-      <div class="project-overlay"><span class="project-label">values motion</span></div>
-    </div>
-
-    <div class="project-item" onclick="openProject(4)">
-      <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=600&q=80&auto=format" alt="Leadership Portraits">
-      <div class="project-overlay"><span class="project-label">leadership portraits</span></div>
-    </div>
-
+    <!-- loaded from Supabase -->
   </div>
 
   <!-- CLIENTS -->
@@ -560,54 +535,64 @@ textarea.form-field { resize: none; height: 80px; margin-top: 8px; }
 </div>
 
 <script>
-/* ── CURSOR ── */
+// ── SUPABASE CONFIG ── paste your values from Supabase dashboard ──
+const SUPABASE_URL = 'https://wevumnkqudiqfshzgtmb.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndldnVtbmtxdWRpcWZzaHpndG1iIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc4MjA3NDIsImV4cCI6MjA5MzM5Njc0Mn0.Z6NDn8Qi1bzCLoog1laFAWScHhp1rHX9Ook9_mmcvTE';
+
+// ── CURSOR ──
 const cursor = document.getElementById('cursor');
 document.addEventListener('mousemove', e => {
   cursor.style.left = e.clientX + 'px';
   cursor.style.top  = e.clientY + 'px';
 });
-document.querySelectorAll('a, button, .project-item').forEach(el => {
-  el.addEventListener('mouseenter', () => {
-    cursor.classList.remove('hover', 'hover-red');
-    cursor.classList.add(el.classList.contains('nav-contact') ? 'hover-red' : 'hover');
+function bindCursor() {
+  document.querySelectorAll('a, button, .project-item').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cursor.classList.remove('hover', 'hover-red');
+      cursor.classList.add(el.classList.contains('nav-contact') ? 'hover-red' : 'hover');
+    });
+    el.addEventListener('mouseleave', () => cursor.classList.remove('hover', 'hover-red'));
   });
-  el.addEventListener('mouseleave', () => cursor.classList.remove('hover', 'hover-red'));
-});
+}
 
-/* ── ENTRY ANIMATION ── */
+// ── ENTRY ANIMATION ──
 window.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.anim').forEach(el => el.classList.add('go'));
+  loadProjects();
 });
 
-/* ── PROJECTS DATA ── */
-const projects = [
-  { tag: 'motion graphics', title: 'culture film',
-    desc: "A 90-second animated film distilling a company's culture code into a visual story the whole team could share and feel proud of.",
-    img: 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=900&q=80&auto=format' },
-  { tag: 'live action', title: 'all-hands film',
-    desc: 'A produced shoot capturing real moments from a company-wide gathering — edited to feel like a memory, not a corporate recap.',
-    img: 'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=900&q=80&auto=format' },
-  { tag: 'live action', title: 'onboarding series',
-    desc: 'Three-part content series for new joiners. Replaced a 40-page PDF with a watch-in-20-minutes experience.',
-    img: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=900&q=80&auto=format' },
-  { tag: 'motion graphics', title: 'values motion',
-    desc: 'Six values, six vignettes. Each one uses a different visual metaphor to make abstract principles feel lived-in and human.',
-    img: 'https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=900&q=80&auto=format' },
-  { tag: 'live action', title: 'leadership portraits',
-    desc: 'A cinematic portrait series for a newly restructured leadership team. Humanised faces behind roles people had only seen in org charts.',
-    img: 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=900&q=80&auto=format' }
-];
+// ── LOAD PROJECTS FROM SUPABASE ──
+let projects = [];
 
-/* ── SCROLL INDICATOR + COUNT ── */
+async function loadProjects() {
+  try {
+    const res = await fetch(
+      `${SUPABASE_URL}/rest/v1/projects?select=*&order=sort_order.asc`,
+      { headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}` } }
+    );
+    projects = await res.json();
+  } catch (e) {
+    projects = [];
+  }
 
+  const grid = document.getElementById('projectsScroll');
+  grid.innerHTML = projects.map((p, i) => `
+    <div class="project-item" onclick="openProject(${i})">
+      <img src="${p.image_url}" alt="${p.title}">
+      <div class="project-overlay"><span class="project-label">${p.title}</span></div>
+    </div>
+  `).join('');
 
-/* ── OVERLAYS ── */
+  bindCursor();
+}
+
+// ── OVERLAYS ──
 function openProject(i) {
   const p = projects[i];
-  document.getElementById('detailImg').src            = p.img;
-  document.getElementById('detailTag').textContent    = p.tag;
-  document.getElementById('detailTitle').textContent  = p.title;
-  document.getElementById('detailDesc').textContent   = p.desc;
+  document.getElementById('detailImg').src           = p.image_url;
+  document.getElementById('detailTag').textContent   = p.tag;
+  document.getElementById('detailTitle').textContent = p.title;
+  document.getElementById('detailDesc').textContent  = p.description;
   document.getElementById('projectOverlay').classList.add('open');
   document.body.style.overflow = 'hidden';
 }
