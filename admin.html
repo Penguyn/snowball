@@ -7,7 +7,6 @@
 <link rel="stylesheet" href="https://use.typekit.net/xxj7zrj.css">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
 :root {
   --font: 'snaga-unicase-display', sans-serif;
   --border: rgba(0,0,0,0.1);
@@ -15,329 +14,119 @@
   --red: #ff0000;
   --ease: cubic-bezier(0.4,0,0.2,1);
 }
-
-body {
-  font-family: var(--font);
-  font-weight: 100;
-  background: #fff;
-  color: #000;
-  min-height: 100vh;
-}
+body { font-family: var(--font); font-weight: 100; background: #fff; color: #000; min-height: 100vh; }
 
 /* ── LOGIN ── */
-#loginScreen {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.login-box {
-  width: 340px;
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-}
-
-.login-logo {
-  height: 36px;
-  width: auto;
-  margin-bottom: 48px;
-}
-
-.login-label {
-  font-size: 11px;
-  letter-spacing: 0.1em;
-  color: #aaa;
-  margin-bottom: 24px;
-}
-
-.login-field {
-  border: none;
-  border-bottom: 1px solid var(--border);
-  background: transparent;
-  padding: 12px 0;
-  font-family: var(--font);
-  font-weight: 100;
-  font-size: 14px;
-  color: #000;
-  outline: none;
-  width: 100%;
-  transition: border-color 0.2s;
-}
+#loginScreen { min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+.login-box { width: 340px; display: flex; flex-direction: column; }
+.login-logo { height: 36px; width: auto; margin-bottom: 48px; }
+.login-label { font-size: 11px; letter-spacing: 0.1em; color: #aaa; margin-bottom: 24px; }
+.login-field { border: none; border-bottom: 1px solid var(--border); background: transparent; padding: 12px 0; font-family: var(--font); font-weight: 100; font-size: 14px; color: #000; outline: none; width: 100%; transition: border-color 0.2s; margin-bottom: 4px; }
 .login-field:focus { border-color: #000; }
 .login-field::placeholder { color: #ccc; }
-
-.login-btn {
-  margin-top: 32px;
-  font-family: var(--font);
-  font-weight: 100;
-  font-size: 11px;
-  letter-spacing: 0.12em;
-  color: #000;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  transition: gap 0.3s var(--ease);
-}
+.login-btn { margin-top: 32px; font-family: var(--font); font-weight: 100; font-size: 11px; letter-spacing: 0.12em; color: #000; background: none; border: none; cursor: pointer; padding: 0; display: flex; align-items: center; gap: 10px; transition: gap 0.3s var(--ease); }
 .login-btn:hover { gap: 18px; }
-
-.arrow {
-  display: block;
-  width: 28px; height: 1px;
-  background: #000;
-  position: relative;
-  transition: width 0.3s var(--ease);
-}
+.arrow { display: block; width: 28px; height: 1px; background: #000; position: relative; transition: width 0.3s var(--ease); }
 .login-btn:hover .arrow { width: 40px; }
-.arrow::after {
-  content: '';
-  position: absolute;
-  right: 0; top: -3px;
-  width: 6px; height: 6px;
-  border-right: 1px solid #000;
-  border-top: 1px solid #000;
-  transform: rotate(45deg);
-}
+.arrow::after { content: ''; position: absolute; right: 0; top: -3px; width: 6px; height: 6px; border-right: 1px solid #000; border-top: 1px solid #000; transform: rotate(45deg); }
+.login-error { margin-top: 16px; font-size: 11px; color: var(--red); letter-spacing: 0.06em; min-height: 16px; }
 
-.login-error {
-  margin-top: 16px;
-  font-size: 11px;
-  color: var(--red);
-  letter-spacing: 0.06em;
-  min-height: 16px;
-}
-
-/* ── ADMIN PANEL ── */
+/* ── ADMIN ── */
 #adminPanel { display: none; }
-
-.admin-nav {
-  position: fixed;
-  top: 0; left: 0; right: 0;
-  height: 64px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 48px;
-  background: rgba(255,255,255,0.96);
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid var(--border);
-  z-index: 100;
-}
-
+.admin-nav { position: fixed; top: 0; left: 0; right: 0; height: 64px; display: flex; justify-content: space-between; align-items: center; padding: 0 48px; background: rgba(255,255,255,0.96); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); z-index: 100; }
 .admin-logo { height: 32px; width: auto; }
-
-.admin-nav-right {
-  display: flex;
-  align-items: center;
-  gap: 32px;
-}
-
-.nav-btn {
-  font-family: var(--font);
-  font-weight: 100;
-  font-size: 13px;
-  letter-spacing: 0.04em;
-  color: #000;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-  transition: opacity 0.2s;
-}
+.admin-nav-right { display: flex; align-items: center; gap: 32px; }
+.nav-btn { font-family: var(--font); font-weight: 100; font-size: 13px; letter-spacing: 0.04em; color: #000; background: none; border: none; cursor: pointer; padding: 0; text-decoration: none; transition: opacity 0.2s; }
 .nav-btn:hover { opacity: 0.5; }
 .nav-btn.red { color: var(--red); }
+.admin-body { padding: 96px 48px 80px; max-width: 800px; }
 
-.admin-body {
-  padding: 96px 48px 80px;
-  max-width: 960px;
-}
+/* ── TABS ── */
+.tabs { display: flex; gap: 32px; margin-bottom: 48px; border-bottom: 1px solid var(--border); }
+.tab { font-family: var(--font); font-weight: 100; font-size: 13px; letter-spacing: 0.04em; color: #aaa; background: none; border: none; cursor: pointer; padding: 0 0 12px; border-bottom: 1px solid transparent; margin-bottom: -1px; transition: color 0.2s, border-color 0.2s; }
+.tab.active { color: #000; border-color: #000; }
 
-/* ── UPLOAD FORM ── */
-.section-title {
-  font-size: 11px;
-  letter-spacing: 0.14em;
-  color: #aaa;
-  margin-bottom: 24px;
-}
+/* ── SECTION TITLE ── */
+.section-title { font-size: 11px; letter-spacing: 0.14em; color: #aaa; margin-bottom: 24px; }
 
-.upload-form {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0 48px;
-  margin-bottom: 72px;
-}
+/* ── COVER UPLOAD ── */
+.cover-drop { border: 1px dashed var(--border); aspect-ratio: 16/7; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; cursor: pointer; margin-bottom: 24px; position: relative; background: var(--grey); overflow: hidden; transition: border-color 0.2s; }
+.cover-drop:hover { border-color: #000; }
+.cover-drop.has-image { border-style: solid; }
+.cover-drop img.preview { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.cover-drop input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
+.drop-label { font-size: 11px; letter-spacing: 0.1em; color: #aaa; position: relative; z-index: 1; background: rgba(255,255,255,0.85); padding: 6px 12px; }
 
-.upload-dropzone {
-  grid-column: 1 / -1;
-  border: 1px dashed var(--border);
-  aspect-ratio: 16/9;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  cursor: pointer;
-  margin-bottom: 24px;
-  position: relative;
-  transition: border-color 0.2s;
-  background: var(--grey);
-  overflow: hidden;
-}
-.upload-dropzone:hover { border-color: #000; }
-.upload-dropzone.has-image { border-style: solid; }
-
-.upload-dropzone img {
-  position: absolute;
-  inset: 0;
-  width: 100%; height: 100%;
-  object-fit: cover;
-}
-
-.drop-label {
-  font-size: 11px;
-  letter-spacing: 0.1em;
-  color: #aaa;
-  position: relative;
-  z-index: 1;
-  background: rgba(255,255,255,0.85);
-  padding: 6px 12px;
-}
-
-.upload-dropzone input[type="file"] {
-  position: absolute;
-  inset: 0;
-  opacity: 0;
-  cursor: pointer;
-  width: 100%;
-  height: 100%;
-}
-
-.form-field {
-  border: none;
-  border-bottom: 1px solid var(--border);
-  background: transparent;
-  padding: 14px 0;
-  font-family: var(--font);
-  font-weight: 100;
-  font-size: 13px;
-  color: #000;
-  outline: none;
-  width: 100%;
-  transition: border-color 0.2s;
-  margin-bottom: 4px;
-}
+/* ── BASIC FIELDS ── */
+.form-field { border: none; border-bottom: 1px solid var(--border); background: transparent; padding: 14px 0; font-family: var(--font); font-weight: 100; font-size: 13px; color: #000; outline: none; width: 100%; transition: border-color 0.2s; margin-bottom: 4px; }
 .form-field:focus { border-color: #000; }
 .form-field::placeholder { color: #ccc; }
 
-textarea.form-field {
-  resize: none;
-  height: 72px;
-  grid-column: 1 / -1;
-}
+/* ── BLOCK EDITOR ── */
+.block-editor { margin-top: 32px; }
+.block-editor-label { font-size: 11px; letter-spacing: 0.14em; color: #aaa; margin-bottom: 16px; }
 
-.submit-btn {
-  margin-top: 28px;
-  grid-column: 1 / -1;
-  font-family: var(--font);
-  font-weight: 100;
-  font-size: 11px;
-  letter-spacing: 0.12em;
-  color: #000;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  transition: gap 0.3s var(--ease);
-}
+.block-list { display: flex; flex-direction: column; gap: 3px; margin-bottom: 20px; }
+
+.block-item { background: var(--grey); padding: 16px; position: relative; display: flex; flex-direction: column; gap: 10px; }
+.block-item-header { display: flex; justify-content: space-between; align-items: center; }
+.block-type-label { font-size: 10px; letter-spacing: 0.14em; color: #aaa; text-transform: uppercase; }
+.block-actions { display: flex; gap: 12px; }
+.block-btn { font-family: var(--font); font-weight: 100; font-size: 10px; letter-spacing: 0.1em; color: #aaa; background: none; border: none; cursor: pointer; padding: 0; transition: color 0.2s; }
+.block-btn:hover { color: #000; }
+.block-btn.del:hover { color: var(--red); }
+
+.block-textarea { border: none; border-bottom: 1px solid var(--border); background: transparent; padding: 8px 0; font-family: var(--font); font-weight: 100; font-size: 13px; color: #000; outline: none; width: 100%; resize: none; min-height: 60px; transition: border-color 0.2s; line-height: 1.7; }
+.block-textarea:focus { border-color: #000; }
+.block-textarea::placeholder { color: #ccc; }
+
+.block-select { border: none; border-bottom: 1px solid var(--border); background: transparent; padding: 8px 0; font-family: var(--font); font-weight: 100; font-size: 12px; color: #000; outline: none; width: 100%; cursor: pointer; }
+
+.block-img-drop { border: 1px dashed var(--border); aspect-ratio: 16/9; display: flex; align-items: center; justify-content: center; cursor: pointer; position: relative; background: #fff; overflow: hidden; transition: border-color 0.2s; }
+.block-img-drop:hover { border-color: #000; }
+.block-img-drop.has-image { border-style: solid; }
+.block-img-drop img.preview { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.block-img-drop input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
+.block-img-drop .drop-label { font-size: 11px; color: #ccc; position: relative; z-index: 1; }
+
+.block-url-input { border: none; border-bottom: 1px solid var(--border); background: transparent; padding: 8px 0; font-family: var(--font); font-weight: 100; font-size: 13px; color: #000; outline: none; width: 100%; transition: border-color 0.2s; }
+.block-url-input:focus { border-color: #000; }
+.block-url-input::placeholder { color: #ccc; }
+
+/* ── ADD BLOCK BUTTONS ── */
+.add-block-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 32px; }
+.add-block-btn { font-family: var(--font); font-weight: 100; font-size: 11px; letter-spacing: 0.1em; color: #000; background: none; border: 1px solid var(--border); padding: 8px 16px; cursor: pointer; transition: border-color 0.2s, background 0.2s; }
+.add-block-btn:hover { border-color: #000; }
+
+/* ── SUBMIT ── */
+.submit-row { display: flex; align-items: center; gap: 24px; margin-top: 16px; }
+.submit-btn { font-family: var(--font); font-weight: 100; font-size: 11px; letter-spacing: 0.12em; color: #000; background: none; border: none; cursor: pointer; padding: 0; display: flex; align-items: center; gap: 10px; transition: gap 0.3s var(--ease); }
 .submit-btn:hover { gap: 18px; }
 .submit-btn .arrow { background: #000; }
-.submit-btn .arrow::after { border-color: #000; }
-
-.form-status {
-  grid-column: 1 / -1;
-  font-size: 11px;
-  letter-spacing: 0.08em;
-  min-height: 20px;
-  margin-top: 8px;
-}
+.form-status { font-size: 11px; letter-spacing: 0.08em; min-height: 20px; }
 .form-status.ok  { color: #000; }
 .form-status.err { color: var(--red); }
 
 /* ── PROJECT LIST ── */
 .project-list { display: flex; flex-direction: column; gap: 2px; }
-
-.project-row {
-  display: grid;
-  grid-template-columns: 80px 1fr 1fr auto;
-  align-items: center;
-  gap: 24px;
-  padding: 12px 0;
-  border-bottom: 1px solid var(--border);
-}
-
-.project-thumb {
-  width: 80px;
-  aspect-ratio: 1/1;
-  object-fit: cover;
-  background: var(--grey);
-  display: block;
-}
-
+.project-row { display: grid; grid-template-columns: 80px 1fr auto auto; align-items: center; gap: 24px; padding: 14px 0; border-bottom: 1px solid var(--border); }
+.project-thumb { width: 80px; aspect-ratio: 16/9; object-fit: cover; background: var(--grey); display: block; }
 .project-info { display: flex; flex-direction: column; gap: 4px; }
-.project-title { font-size: 13px; font-weight: 100; letter-spacing: 0.02em; }
+.project-title { font-size: 13px; font-weight: 100; }
 .project-tag   { font-size: 10px; letter-spacing: 0.1em; color: #aaa; }
-
+.move-btns { display: flex; flex-direction: column; gap: 4px; }
+.move-btn { font-size: 11px; background: none; border: none; cursor: pointer; color: #ccc; line-height: 1; padding: 2px; transition: color 0.2s; }
+.move-btn:hover { color: #000; }
 .project-actions { display: flex; gap: 16px; }
-
-.action-btn {
-  font-family: var(--font);
-  font-weight: 100;
-  font-size: 11px;
-  letter-spacing: 0.08em;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-  color: #aaa;
-  transition: color 0.2s;
-}
+.action-btn { font-family: var(--font); font-weight: 100; font-size: 11px; letter-spacing: 0.08em; background: none; border: none; cursor: pointer; padding: 0; color: #aaa; transition: color 0.2s; }
 .action-btn:hover { color: #000; }
 .action-btn.del:hover { color: var(--red); }
-
-.move-btns { display: flex; flex-direction: column; gap: 4px; }
-.move-btn {
-  font-size: 10px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: #ccc;
-  line-height: 1;
-  padding: 2px;
-  transition: color 0.2s;
-}
-.move-btn:hover { color: #000; }
-
-.empty-state {
-  font-size: 12px;
-  color: #ccc;
-  letter-spacing: 0.06em;
-  padding: 32px 0;
-}
+.empty-state { font-size: 12px; color: #ccc; letter-spacing: 0.06em; padding: 32px 0; }
 
 @media (max-width: 600px) {
   .admin-nav { padding: 0 24px; }
   .admin-body { padding: 88px 24px 60px; }
-  .upload-form { grid-template-columns: 1fr; gap: 0; }
   .project-row { grid-template-columns: 60px 1fr auto; }
-  .project-info + * { display: none; }
 }
 </style>
 </head>
@@ -349,17 +138,14 @@ textarea.form-field {
     <img src="Snowball_logo.svg" alt="Snowball" class="login-logo">
     <p class="login-label">admin access</p>
     <input class="login-field" type="email" id="loginEmail" placeholder="email" autocomplete="email">
-    <input class="login-field" type="password" id="loginPassword" placeholder="password" autocomplete="current-password" style="margin-top:4px;">
-    <button class="login-btn" onclick="doLogin()">
-      sign in <span class="arrow"></span>
-    </button>
+    <input class="login-field" type="password" id="loginPassword" placeholder="password" autocomplete="current-password">
+    <button class="login-btn" onclick="doLogin()">sign in <span class="arrow"></span></button>
     <p class="login-error" id="loginError"></p>
   </div>
 </div>
 
 <!-- ADMIN PANEL -->
 <div id="adminPanel">
-
   <nav class="admin-nav">
     <img src="Snowball_logo.svg" alt="Snowball" class="admin-logo">
     <div class="admin-nav-right">
@@ -369,251 +155,275 @@ textarea.form-field {
   </nav>
 
   <div class="admin-body">
+    <div class="tabs">
+      <button class="tab active" onclick="showTab('add')">add project</button>
+      <button class="tab" onclick="showTab('manage')">manage projects</button>
+    </div>
 
-    <!-- UPLOAD FORM -->
-    <p class="section-title">add project</p>
-    <div class="upload-form">
-
-      <div class="upload-dropzone" id="dropzone">
-        <input type="file" id="imageFile" accept="image/*,video/*" onchange="previewImage(this)">
-        <span class="drop-label" id="dropLabel">click to upload image</span>
+    <!-- ADD TAB -->
+    <div id="tabAdd">
+      <p class="section-title">cover image</p>
+      <div class="cover-drop" id="coverDrop">
+        <input type="file" id="coverFile" accept="image/*" onchange="previewCover(this)">
+        <span class="drop-label" id="coverLabel">click to upload cover image</span>
       </div>
 
       <input class="form-field" type="text" id="projTitle" placeholder="project title">
       <input class="form-field" type="text" id="projTag" placeholder="tag  (e.g. motion graphics)">
-      <textarea class="form-field" id="projDesc" placeholder="description"></textarea>
 
-      <button class="submit-btn" onclick="uploadProject()">
-        publish <span class="arrow"></span>
-      </button>
-      <p class="form-status" id="formStatus"></p>
+      <div class="block-editor">
+        <p class="block-editor-label">content blocks</p>
+        <div class="block-list" id="blockList"></div>
+        <div class="add-block-row">
+          <button class="add-block-btn" onclick="addBlock('text')">+ text</button>
+          <button class="add-block-btn" onclick="addBlock('image')">+ image</button>
+          <button class="add-block-btn" onclick="addBlock('embed')">+ video / embed</button>
+        </div>
+      </div>
 
+      <div class="submit-row">
+        <button class="submit-btn" onclick="uploadProject()">publish <span class="arrow"></span></button>
+        <p class="form-status" id="formStatus"></p>
+      </div>
     </div>
 
-    <!-- PROJECT LIST -->
-    <p class="section-title">projects</p>
-    <div class="project-list" id="projectList">
-      <p class="empty-state">loading...</p>
+    <!-- MANAGE TAB -->
+    <div id="tabManage" style="display:none;">
+      <p class="section-title">projects</p>
+      <div class="project-list" id="projectList">
+        <p class="empty-state">loading...</p>
+      </div>
     </div>
-
   </div>
 </div>
 
 <script>
-// ── SUPABASE CONFIG — paste your values here ──
 const SUPABASE_URL = 'https://wevumnkqudiqfshzgtmb.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndldnVtbmtxdWRpcWZzaHpndG1iIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc4MjA3NDIsImV4cCI6MjA5MzM5Njc0Mn0.Z6NDn8Qi1bzCLoog1laFAWScHhp1rHX9Ook9_mmcvTE';
 
-const h = (extra = {}) => ({
-  'Content-Type': 'application/json',
-  apikey: SUPABASE_KEY,
-  Authorization: `Bearer ${token()}`,
-  ...extra
-});
-
-function token() {
-  return sessionStorage.getItem('sb_token') || SUPABASE_KEY;
-}
+const h = (extra = {}) => ({ 'Content-Type': 'application/json', apikey: SUPABASE_KEY, Authorization: `Bearer ${token()}`, ...extra });
+function token() { return sessionStorage.getItem('sb_token') || SUPABASE_KEY; }
 
 // ── AUTH ──
 async function doLogin() {
-  const email    = document.getElementById('loginEmail').value.trim();
+  const email = document.getElementById('loginEmail').value.trim();
   const password = document.getElementById('loginPassword').value;
-  const errEl    = document.getElementById('loginError');
+  const errEl = document.getElementById('loginError');
   errEl.textContent = '';
-
   const res = await fetch(`${SUPABASE_URL}/auth/v1/token?grant_type=password`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', apikey: SUPABASE_KEY },
+    method: 'POST', headers: { 'Content-Type': 'application/json', apikey: SUPABASE_KEY },
     body: JSON.stringify({ email, password })
   });
   const data = await res.json();
-
-  if (data.access_token) {
-    sessionStorage.setItem('sb_token', data.access_token);
-    showPanel();
-  } else {
-    errEl.textContent = 'incorrect email or password';
-  }
+  if (data.access_token) { sessionStorage.setItem('sb_token', data.access_token); showPanel(); }
+  else errEl.textContent = 'incorrect email or password';
 }
-
 async function doLogout() {
-  await fetch(`${SUPABASE_URL}/auth/v1/logout`, {
-    method: 'POST', headers: h()
-  });
+  await fetch(`${SUPABASE_URL}/auth/v1/logout`, { method: 'POST', headers: h() });
   sessionStorage.removeItem('sb_token');
   document.getElementById('adminPanel').style.display = 'none';
   document.getElementById('loginScreen').style.display = 'flex';
 }
-
 function showPanel() {
   document.getElementById('loginScreen').style.display = 'none';
-  document.getElementById('adminPanel').style.display  = 'block';
-  loadList();
+  document.getElementById('adminPanel').style.display = 'block';
+}
+window.addEventListener('DOMContentLoaded', () => { if (sessionStorage.getItem('sb_token')) showPanel(); });
+document.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && document.getElementById('loginScreen').style.display !== 'none') doLogin();
+});
+
+// ── TABS ──
+function showTab(name) {
+  document.getElementById('tabAdd').style.display = name === 'add' ? 'block' : 'none';
+  document.getElementById('tabManage').style.display = name === 'manage' ? 'block' : 'none';
+  document.querySelectorAll('.tab').forEach((t,i) => t.classList.toggle('active', (i===0&&name==='add')||(i===1&&name==='manage')));
+  if (name === 'manage') loadList();
 }
 
-// Auto-login if token exists
-window.addEventListener('DOMContentLoaded', () => {
-  if (sessionStorage.getItem('sb_token')) showPanel();
-});
+// ── COVER PREVIEW ──
+function previewCover(input) {
+  const file = input.files[0]; if (!file) return;
+  const dz = document.getElementById('coverDrop');
+  const ex = dz.querySelector('img.preview'); if (ex) ex.remove();
+  const img = document.createElement('img'); img.className = 'preview'; img.src = URL.createObjectURL(file);
+  dz.appendChild(img); dz.classList.add('has-image');
+  document.getElementById('coverLabel').textContent = file.name;
+}
 
-// Enter key on login
-document.addEventListener('keydown', e => {
-  if (e.key === 'Enter' && document.getElementById('loginScreen').style.display !== 'none') {
-    doLogin();
-  }
-});
+// ── BLOCK EDITOR ──
+let blocks = [];
+let blockCounter = 0;
 
-// ── IMAGE PREVIEW ──
-function previewImage(input) {
-  const file = input.files[0];
-  if (!file) return;
-  const dz = document.getElementById('dropzone');
-  const existing = dz.querySelector('img.preview');
-  if (existing) existing.remove();
-  const img = document.createElement('img');
-  img.className = 'preview';
-  img.src = URL.createObjectURL(file);
-  dz.appendChild(img);
-  dz.classList.add('has-image');
-  document.getElementById('dropLabel').textContent = file.name;
+function addBlock(type) {
+  const id = 'block_' + (++blockCounter);
+  blocks.push({ id, type, content: '', size: 'medium', file: null, url: '' });
+  renderBlocks();
+}
+
+function removeBlock(id) {
+  blocks = blocks.filter(b => b.id !== id);
+  renderBlocks();
+}
+
+function moveBlock(id, dir) {
+  const i = blocks.findIndex(b => b.id === id);
+  if (dir === 'up' && i > 0) [blocks[i-1], blocks[i]] = [blocks[i], blocks[i-1]];
+  if (dir === 'down' && i < blocks.length-1) [blocks[i], blocks[i+1]] = [blocks[i+1], blocks[i]];
+  renderBlocks();
+}
+
+function renderBlocks() {
+  const list = document.getElementById('blockList');
+  list.innerHTML = blocks.map((b, i) => `
+    <div class="block-item" id="bi_${b.id}">
+      <div class="block-item-header">
+        <span class="block-type-label">${b.type}</span>
+        <div class="block-actions">
+          ${i > 0 ? `<button class="block-btn" onclick="moveBlock('${b.id}','up')">↑</button>` : ''}
+          ${i < blocks.length-1 ? `<button class="block-btn" onclick="moveBlock('${b.id}','down')">↓</button>` : ''}
+          <button class="block-btn del" onclick="removeBlock('${b.id}')">remove</button>
+        </div>
+      </div>
+      ${b.type === 'text' ? `
+        <textarea class="block-textarea" placeholder="write your text here..." onchange="updateBlock('${b.id}','content',this.value)" oninput="this.style.height='auto';this.style.height=this.scrollHeight+'px'">${b.content}</textarea>
+      ` : b.type === 'image' ? `
+        <div class="block-img-drop ${b.file||b.url?'has-image':''}" id="drop_${b.id}">
+          <input type="file" accept="image/*" onchange="blockImagePreview(this,'${b.id}')">
+          ${b.previewUrl ? `<img class="preview" src="${b.previewUrl}">` : ''}
+          <span class="drop-label">${b.file ? b.file.name : 'click to upload image'}</span>
+        </div>
+        <select class="block-select" onchange="updateBlock('${b.id}','size',this.value)">
+          <option value="small" ${b.size==='small'?'selected':''}>small (40%)</option>
+          <option value="medium" ${b.size==='medium'?'selected':''}>medium (70%)</option>
+          <option value="full" ${b.size==='full'?'selected':''}>full width</option>
+        </select>
+      ` : `
+        <input class="block-url-input" type="url" placeholder="paste YouTube, Vimeo or any URL..." value="${b.url}" onchange="updateBlock('${b.id}','url',this.value)">
+      `}
+    </div>
+  `).join('');
+}
+
+function updateBlock(id, key, value) {
+  const b = blocks.find(b => b.id === id);
+  if (b) b[key] = value;
+}
+
+function blockImagePreview(input, id) {
+  const file = input.files[0]; if (!file) return;
+  const b = blocks.find(b => b.id === id);
+  if (b) { b.file = file; b.previewUrl = URL.createObjectURL(file); }
+  renderBlocks();
 }
 
 // ── UPLOAD PROJECT ──
 async function uploadProject() {
-  const title  = document.getElementById('projTitle').value.trim();
-  const tag    = document.getElementById('projTag').value.trim();
-  const desc   = document.getElementById('projDesc').value.trim();
-  const file   = document.getElementById('imageFile').files[0];
+  const title = document.getElementById('projTitle').value.trim();
+  const tag   = document.getElementById('projTag').value.trim();
+  const coverFile = document.getElementById('coverFile').files[0];
   const status = document.getElementById('formStatus');
 
-  if (!title || !file) {
-    status.textContent = 'title and image are required';
-    status.className = 'form-status err';
-    return;
+  if (!title || !coverFile) { status.textContent = 'title and cover image are required'; status.className = 'form-status err'; return; }
+
+  status.textContent = 'uploading...'; status.className = 'form-status ok';
+
+  // Upload cover
+  const coverExt = coverFile.name.split('.').pop();
+  const coverName = `cover_${Date.now()}.${coverExt}`;
+  const coverUpload = await fetch(`${SUPABASE_URL}/storage/v1/object/projects/${coverName}`, {
+    method: 'POST', headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${token()}`, 'Content-Type': coverFile.type }, body: coverFile
+  });
+  if (!coverUpload.ok) { status.textContent = 'cover upload failed'; status.className = 'form-status err'; return; }
+  const coverUrl = `${SUPABASE_URL}/storage/v1/object/public/projects/${coverName}`;
+
+  // Upload block images and build content
+  const processedBlocks = [];
+  for (const b of blocks) {
+    if (b.type === 'image' && b.file) {
+      const ext = b.file.name.split('.').pop();
+      const fname = `img_${Date.now()}_${Math.random().toString(36).slice(2)}.${ext}`;
+      await fetch(`${SUPABASE_URL}/storage/v1/object/projects/${fname}`, {
+        method: 'POST', headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${token()}`, 'Content-Type': b.file.type }, body: b.file
+      });
+      processedBlocks.push({ type: 'image', url: `${SUPABASE_URL}/storage/v1/object/public/projects/${fname}`, size: b.size });
+    } else if (b.type === 'text' && b.content.trim()) {
+      processedBlocks.push({ type: 'text', content: b.content });
+    } else if (b.type === 'embed' && b.url.trim()) {
+      processedBlocks.push({ type: 'embed', url: b.url });
+    }
   }
 
-  status.textContent = 'uploading...';
-  status.className = 'form-status ok';
-
-  // 1. Upload image to Supabase Storage
-  const ext      = file.name.split('.').pop();
-  const filename = `${Date.now()}.${ext}`;
-
-  const uploadRes = await fetch(
-    `${SUPABASE_URL}/storage/v1/object/projects/${filename}`,
-    { method: 'POST', headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${token()}`, 'Content-Type': file.type }, body: file }
-  );
-
-  if (!uploadRes.ok) {
-    status.textContent = 'image upload failed — check storage bucket';
-    status.className = 'form-status err';
-    return;
-  }
-
-  const image_url = `${SUPABASE_URL}/storage/v1/object/public/projects/${filename}`;
-
-  // 2. Get current max sort_order
-  const listRes  = await fetch(`${SUPABASE_URL}/rest/v1/projects?select=sort_order&order=sort_order.desc&limit=1`, { headers: h() });
+  // Get sort order
+  const listRes = await fetch(`${SUPABASE_URL}/rest/v1/projects?select=sort_order&order=sort_order.desc&limit=1`, { headers: h() });
   const listData = await listRes.json();
-  const sort_order = listData.length ? (listData[0].sort_order + 1) : 0;
+  const sort_order = listData.length ? listData[0].sort_order + 1 : 0;
 
-  // 3. Insert row
+  // Insert
   const insertRes = await fetch(`${SUPABASE_URL}/rest/v1/projects`, {
-    method: 'POST',
-    headers: h({ Prefer: 'return=minimal' }),
-    body: JSON.stringify({ title, tag, description: desc, image_url, sort_order })
+    method: 'POST', headers: h({ Prefer: 'return=minimal' }),
+    body: JSON.stringify({ title, tag, image_url: coverUrl, content: JSON.stringify(processedBlocks), sort_order })
   });
 
   if (insertRes.ok || insertRes.status === 201) {
-    status.textContent = 'published ✓';
-    status.className = 'form-status ok';
-    // Reset form
-    document.getElementById('projTitle').value   = '';
-    document.getElementById('projTag').value     = '';
-    document.getElementById('projDesc').value    = '';
-    document.getElementById('imageFile').value   = '';
-    document.getElementById('dropLabel').textContent = 'click to upload image';
-    const dz = document.getElementById('dropzone');
-    const prev = dz.querySelector('img.preview');
-    if (prev) prev.remove();
+    status.textContent = 'published ✓'; status.className = 'form-status ok';
+    // Reset
+    document.getElementById('projTitle').value = '';
+    document.getElementById('projTag').value = '';
+    document.getElementById('coverFile').value = '';
+    document.getElementById('coverLabel').textContent = 'click to upload cover image';
+    const dz = document.getElementById('coverDrop');
+    const prev = dz.querySelector('img.preview'); if (prev) prev.remove();
     dz.classList.remove('has-image');
-    loadList();
+    blocks = []; renderBlocks();
   } else {
-    status.textContent = 'something went wrong — try again';
-    status.className = 'form-status err';
+    status.textContent = 'something went wrong — try again'; status.className = 'form-status err';
   }
 }
 
-// ── LOAD PROJECT LIST ──
+// ── PROJECT LIST ──
 async function loadList() {
-  const res  = await fetch(`${SUPABASE_URL}/rest/v1/projects?select=*&order=sort_order.asc`, { headers: h() });
+  const res = await fetch(`${SUPABASE_URL}/rest/v1/projects?select=*&order=sort_order.asc`, { headers: h() });
   const data = await res.json();
-  const el   = document.getElementById('projectList');
-
-  if (!data.length) {
-    el.innerHTML = '<p class="empty-state">no projects yet</p>';
-    return;
-  }
-
+  const el = document.getElementById('projectList');
+  if (!data.length) { el.innerHTML = '<p class="empty-state">no projects yet</p>'; return; }
   el.innerHTML = data.map((p, i) => `
-    <div class="project-row" id="row-${p.id}">
+    <div class="project-row">
       <img class="project-thumb" src="${p.image_url}" alt="${p.title}">
       <div class="project-info">
         <span class="project-title">${p.title}</span>
-        <span class="project-tag">${p.tag || ''}</span>
+        <span class="project-tag">${p.tag||''}</span>
       </div>
       <div class="move-btns">
-        ${i > 0              ? `<button class="move-btn" onclick="moveProject('${p.id}', 'up')" title="move up">↑</button>` : '<span style="height:18px;display:block;"></span>'}
-        ${i < data.length-1 ? `<button class="move-btn" onclick="moveProject('${p.id}', 'down')" title="move down">↓</button>` : ''}
+        ${i > 0 ? `<button class="move-btn" onclick="moveProject('${p.id}','up')">↑</button>` : '<span style="height:18px;display:block;"></span>'}
+        ${i < data.length-1 ? `<button class="move-btn" onclick="moveProject('${p.id}','down')">↓</button>` : ''}
       </div>
       <div class="project-actions">
-        <button class="action-btn del" onclick="deleteProject('${p.id}', '${p.image_url}')">delete</button>
+        <button class="action-btn del" onclick="deleteProject('${p.id}','${p.image_url}')">delete</button>
       </div>
     </div>
   `).join('');
 }
 
-// ── DELETE ──
 async function deleteProject(id, imageUrl) {
   if (!confirm('delete this project?')) return;
-
-  // Delete from DB
-  await fetch(`${SUPABASE_URL}/rest/v1/projects?id=eq.${id}`, {
-    method: 'DELETE', headers: h()
-  });
-
-  // Delete image from storage
+  await fetch(`${SUPABASE_URL}/rest/v1/projects?id=eq.${id}`, { method: 'DELETE', headers: h() });
   const filename = imageUrl.split('/projects/').pop();
-  await fetch(`${SUPABASE_URL}/storage/v1/object/projects/${filename}`, {
-    method: 'DELETE', headers: h()
-  });
-
+  await fetch(`${SUPABASE_URL}/storage/v1/object/projects/${filename}`, { method: 'DELETE', headers: h() });
   loadList();
 }
 
-// ── REORDER ──
 async function moveProject(id, direction) {
-  const res  = await fetch(`${SUPABASE_URL}/rest/v1/projects?select=*&order=sort_order.asc`, { headers: h() });
+  const res = await fetch(`${SUPABASE_URL}/rest/v1/projects?select=*&order=sort_order.asc`, { headers: h() });
   const data = await res.json();
-  const idx  = data.findIndex(p => p.id === id);
+  const idx = data.findIndex(p => p.id == id);
   const swapIdx = direction === 'up' ? idx - 1 : idx + 1;
   if (swapIdx < 0 || swapIdx >= data.length) return;
-
-  const a = data[idx];
-  const b = data[swapIdx];
-
+  const a = data[idx], b = data[swapIdx];
   await Promise.all([
-    fetch(`${SUPABASE_URL}/rest/v1/projects?id=eq.${a.id}`, {
-      method: 'PATCH', headers: h({ Prefer: 'return=minimal' }),
-      body: JSON.stringify({ sort_order: b.sort_order })
-    }),
-    fetch(`${SUPABASE_URL}/rest/v1/projects?id=eq.${b.id}`, {
-      method: 'PATCH', headers: h({ Prefer: 'return=minimal' }),
-      body: JSON.stringify({ sort_order: a.sort_order })
-    })
+    fetch(`${SUPABASE_URL}/rest/v1/projects?id=eq.${a.id}`, { method: 'PATCH', headers: h({ Prefer: 'return=minimal' }), body: JSON.stringify({ sort_order: b.sort_order }) }),
+    fetch(`${SUPABASE_URL}/rest/v1/projects?id=eq.${b.id}`, { method: 'PATCH', headers: h({ Prefer: 'return=minimal' }), body: JSON.stringify({ sort_order: a.sort_order }) })
   ]);
-
   loadList();
 }
 </script>
