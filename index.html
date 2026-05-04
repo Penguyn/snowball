@@ -150,7 +150,7 @@ main { padding-top: var(--nav-h); }
   position: relative;
   overflow: hidden;
   cursor: none;
-  background: var(--grey-bg);
+  background: #ffffff;
   flex: 0 0 calc(20vw - 12px);
   min-width: 220px;
   aspect-ratio: 1 / 1;
@@ -501,15 +501,17 @@ textarea.form-field { resize: none; height: 80px; margin-top: 8px; }
 </footer>
 
 <!-- PROJECT OVERLAY -->
-<div class="overlay" id="projectOverlay" onclick="handleOverlayClick(event,'projectOverlay')">
-  <div class="overlay-backdrop"></div>
+<div class="overlay" id="projectOverlay">
+  <div class="overlay-backdrop" onclick="closeOverlay('projectOverlay')"></div>
   <div class="project-detail">
-    <div class="detail-media"><img id="detailImg" src="" alt=""></div>
-    <div class="detail-info">
-      <span class="detail-tag" id="detailTag"></span>
-      <h2 class="detail-title" id="detailTitle"></h2>
-      <p class="detail-desc" id="detailDesc"></p>
-      <button class="detail-close" onclick="closeOverlay('projectOverlay')">close</button>
+    <button class="detail-close" onclick="closeOverlay('projectOverlay')">close</button>
+    <div class="detail-scroll" id="detailScroll">
+      <div class="detail-cover"><img id="detailImg" src="" alt=""></div>
+      <div class="detail-header">
+        <span class="detail-tag" id="detailTag"></span>
+        <h2 class="detail-title" id="detailTitle"></h2>
+      </div>
+      <div class="detail-blocks" id="detailBlocks"></div>
     </div>
   </div>
 </div>
@@ -587,12 +589,39 @@ async function loadProjects() {
 }
 
 // ── OVERLAYS ──
+function getEmbedUrl(url) {
+  try {
+    const u = new URL(url);
+    if (u.hostname.includes('youtube.com') || u.hostname.includes('youtu.be')) {
+      const id = u.searchParams.get('v') || u.pathname.split('/').pop();
+      return `https://www.youtube.com/embed/${id}`;
+    }
+    if (u.hostname.includes('vimeo.com')) {
+      const id = u.pathname.split('/').pop();
+      return `https://player.vimeo.com/video/${id}`;
+    }
+    return url;
+  } catch { return url; }
+}
+
 function openProject(i) {
   const p = projects[i];
   document.getElementById('detailImg').src           = p.image_url;
-  document.getElementById('detailTag').textContent   = p.tag;
+  document.getElementById('detailTag').textContent   = p.tag || '';
   document.getElementById('detailTitle').textContent = p.title;
-  document.getElementById('detailDesc').textContent  = p.description;
+
+  const blocksEl = document.getElementById('detailBlocks');
+  let parsed = [];
+  try { parsed = JSON.parse(p.content || '[]'); } catch {}
+
+  blocksEl.innerHTML = parsed.map(b => {
+    if (b.type === 'text') return `<div class="block-text">${b.content}</div>`;
+    if (b.type === 'image') return `<div class="block-img ${b.size||'medium'}"><img src="${b.url}" alt=""></div>`;
+    if (b.type === 'embed') return `<div class="block-embed"><iframe src="${getEmbedUrl(b.url)}" allowfullscreen></iframe></div>`;
+    return '';
+  }).join('');
+
+  document.getElementById('detailScroll').scrollTop = 0;
   document.getElementById('projectOverlay').classList.add('open');
   document.body.style.overflow = 'hidden';
 }
@@ -607,6 +636,7 @@ function closeOverlay(id) {
 function handleOverlayClick(e, id) {
   if (e.target.classList.contains('overlay-backdrop')) closeOverlay(id);
 }
+
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') { closeOverlay('projectOverlay'); closeOverlay('contactOverlay'); }
 });
